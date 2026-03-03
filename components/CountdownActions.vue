@@ -18,7 +18,7 @@
               March 28, 2026.
               Each day unlocks one civic action you can complete in under 15 minutes. Track your progress, share with
               friends, and build the movement to resist authoritarianism and defend democracy.
-              <button class="underline hover:text-isf-blue transition-colors font-bold" @click="showAboutModal = true">More&hellip;</button>
+              <button class="underline hover:text-isf-blue transition-colors font-bold" @click="navigateTo('/about')">More&hellip;</button>
             </p>
           </div>
 
@@ -38,14 +38,12 @@
     <footer class="mt-16 bg-isf-blue text-white py-5">
       <div class="max-w-7xl mx-auto px-4">
         <nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
-          <button class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors"
-            @click="showAboutModal = true">
+          <NuxtLink to="/about" class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors">
             About
-          </button>
-          <button class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors"
-            @click="showPrivacyModal = true">
+          </NuxtLink>
+          <NuxtLink to="/privacy" class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors">
             Privacy Statement
-          </button>
+          </NuxtLink>
           <a href="https://github.com/IndivisibleSFOrg/no-kings-countdown" target="_blank" rel="noopener noreferrer"
             class="text-white/80 hover:text-white underline-offset-2 hover:underline transition-colors">
             GitHub Repo
@@ -69,11 +67,7 @@
     <!-- Action detail overlay -->
     <ActionDetails v-if="selectedAction" :action="selectedAction" @close="closeDetail" />
 
-    <!-- About modal -->
-    <AboutModal v-if="showAboutModal" :fetched-at="fetchedAt" @close="showAboutModal = false" @refresh="emit('refresh')" @privacy="showAboutModal = false; showPrivacyModal = true" />
 
-    <!-- Privacy modal -->
-    <PrivacyModal v-if="showPrivacyModal" @close="showPrivacyModal = false" />
   </div>
 </template>
 
@@ -82,22 +76,15 @@ import { ref, computed, onMounted, onUnmounted, provide, watch, nextTick } from 
 import type { ActionItem } from '~/composables/googleSheets';
 import { formatDateKey } from '~/composables/dateHelpers';
 import ActionDetails from './ActionDetails.vue';
-import AboutModal from './AboutModal.vue';
-import PrivacyModal from './PrivacyModal.vue';
 import ScoreDisplay from './ScoreDisplay.vue';
 
 interface Props {
   actions: ActionItem[];
-  fetchedAt?: Date | null;
 }
 
 const props = defineProps<Props>();
-const emit = defineEmits<{ refresh: [] }>();
 const router = useRouter();
 const route = useRoute();
-
-const showAboutModal = ref(false);
-const showPrivacyModal = ref(false);
 
 // --- Detail overlay ---
 const selectedAction = ref<ActionItem | null>(null);

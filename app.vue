@@ -1,7 +1,9 @@
 <template>
   <Html lang="en">
     <Body class="antialiased">
-      <NuxtPage />
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
     </Body>
   </Html>
 </template>
