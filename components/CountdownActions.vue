@@ -30,7 +30,7 @@
 
     <!-- Main Content -->
     <main id="tour-main" class="py-8 md:py-12 max-w-7xl mx-auto px-4">
-      <GridView v-if="effectiveLayout === 'grid'" :actions="actions" />
+    <GridView v-if="effectiveLayout === 'grid'" :actions="actions" :highlight-date="highlightDate" />
       <CalendarView v-else :actions="actions" />
     </main>
 
@@ -88,6 +88,8 @@ const route = useRoute();
 
 // --- Detail overlay ---
 const selectedAction = ref<ActionItem | null>(null);
+const highlightDate = ref<string | null>(null);
+let highlightClearTimer: ReturnType<typeof setTimeout> | null = null;
 const { isDevMode: isDev } = useDevMode();
 
 const isActionFuture = (action: ActionItem) => {
@@ -119,11 +121,23 @@ watch(
   () => props.actions,
   (actions) => {
     const key = route.query.detail as string | undefined;
-    if (key && actions.length && !selectedAction.value) {
+    if (key && actions.length && !selectedAction.value && !highlightDate.value) {
       const match = actions.find(a => formatDateKey(a.date) === key);
       if (match && (!isActionFuture(match) || isDev.value)) {
-        selectedAction.value = match;
-        trackViewDetail(formatDateKey(match.date));
+        if (effectiveLayout.value === 'grid') {
+          // Mobile: scroll to card + highlight
+          highlightDate.value = key;
+          nextTick(() => {
+            document.getElementById(`action-${key}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+          if (highlightClearTimer) clearTimeout(highlightClearTimer);
+          highlightClearTimer = setTimeout(() => { highlightDate.value = null; }, 4000);
+          trackViewDetail(key);
+        } else {
+          // Desktop: open modal
+          selectedAction.value = match;
+          trackViewDetail(formatDateKey(match.date));
+        }
       } else if (match && isActionFuture(match) && !isDev.value) {
         // Strip the blocked future detail param from the URL silently
         const q = { ...route.query };
@@ -146,7 +160,10 @@ onMounted(() => {
   // Start home tour for first-time visitors (deferred to let DOM settle)
   nextTick(() => setTimeout(startHomeTour, 400));
 });
-onUnmounted(() => window.removeEventListener('resize', onResize));
+onUnmounted(() => {
+  window.removeEventListener('resize', onResize);
+  if (highlightClearTimer) clearTimeout(highlightClearTimer);
+});
 
 const effectiveLayout = computed<LayoutType>(() =>
   windowWidth.value < CALENDAR_BREAKPOINT ? 'grid' : 'calendar'
