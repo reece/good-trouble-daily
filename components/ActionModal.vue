@@ -31,7 +31,7 @@
 
           <!-- Image attribution: lower left -->
           <a
-            v-if="action.image_back.artist_url || action.image_front.artist_url"
+            v-if="(action.image_back.artist_url || action.image_front.artist_url) && settings.showImageAttributions"
             :href="action.image_back.artist_url || action.image_front.artist_url"
             target="_blank"
             rel="noopener noreferrer"
@@ -149,6 +149,7 @@ const emit = defineEmits<{ close: [] }>();
 const { isComplete, toggleComplete } = useActionCompletion();
 const { trackShareDetail, trackCompleteAction } = useAnalytics();
 const { startModalTour } = useModalTour();
+const { settings } = useSettings();
 
 const handleToggleComplete = (date: Date) => {
   const wasComplete = isComplete(date);

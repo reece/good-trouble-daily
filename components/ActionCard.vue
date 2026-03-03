@@ -40,7 +40,7 @@
 
         <!-- Image attribution: lower left -->
         <a
-          v-if="action.image_front.artist_url"
+          v-if="action.image_front.artist_url && settings.showImageAttributions"
           :href="action.image_front.artist_url"
           target="_blank"
           rel="noopener noreferrer"
@@ -109,7 +109,7 @@
 
           <!-- Image attribution: lower left -->
           <a
-            v-if="action.image_back.artist_url"
+            v-if="action.image_back.artist_url && settings.showImageAttributions"
             :href="action.image_back.artist_url"
             target="_blank"
             rel="noopener noreferrer"
@@ -277,6 +277,7 @@ const isFuture = computed(() => {
 });
 
 const { isDevMode: isDev } = useDevMode();
+const { settings } = useSettings();
 
 // --- Overflow detection (ResizeObserver, no VueUse) ---
 const detailsEl = ref<HTMLElement | null>(null);

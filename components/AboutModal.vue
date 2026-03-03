@@ -66,6 +66,10 @@
             Have an idea for an action? <a href="https://forms.gle/2Zic21S9eiaLqVPR7" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue">Submit a suggestion →</a>
           </p>
 
+          <p class="text-isf-navy text-base leading-relaxed">
+            Images courtesy of our <button class="underline hover:text-isf-blue transition-colors" @click="navigateTo('/artists')">contributing artists →</button>
+          </p>
+
           <!-- ISF Logo -->
           <div class="flex justify-center pt-2">
             <a href="https://indivisiblesf.org/" target="_blank" rel="noopener noreferrer">
