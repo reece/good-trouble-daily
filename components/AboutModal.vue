@@ -78,15 +78,17 @@
         <!-- Footer -->
         <div class="px-5 pb-5 pt-3 border-t border-isf-tinted flex items-end justify-between gap-4 flex-shrink-0">
           <!-- Build & data info -->
-          <div class="text-xs text-isf-blue space-y-1">
+          <div class="text-[10px] leading-[0.8rem] text-isf-blue space-y-1">
             <div>
               <span class="font-semibold">code:</span> <a :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/tree/${buildInfo.ref}`" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors">{{ buildInfo.ref }}</a>
               @
-              <a :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/commit/${buildInfo.fullSha}`" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors">{{ buildInfo.shortSha }}</a>,
-              deployed {{ buildInfo.date }}
+              <a :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/commit/${buildInfo.fullSha}`" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors">{{ buildInfo.shortSha }}</a>
+            </div>
+            <div>
+              <span class="font-semibold">deployed:</span> {{ buildInfo.date }}
             </div>
             <div v-if="fetchedAt" class="flex items-center gap-1">
-              <span class="font-semibold">data:</span>
+              <span class="font-semibold">actions:</span>
               <button
                 class="flex items-center gap-1 underline hover:text-isf-blue transition-colors cursor-pointer"
                 title="Click to refresh data"
