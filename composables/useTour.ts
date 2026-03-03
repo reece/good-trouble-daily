@@ -53,21 +53,21 @@ export function useHomeTour() {
         },
       },
       {
-        element: '#action-2026-03-01',
-        popover: {
-          title: 'Start Here: Sign Up for No Kings 3',
-          description:
-            'March 1 is the single most important action in the whole countdown — signing up for the No Kings March on March 28. If you do only one thing, make it this.',
-          side: 'top',
-          align: 'center',
-        },
-      },
-      {
         element: '#tour-footer',
         popover: {
           title: 'More Links',
           description:
             'Find out more about this project on the About page, read our Privacy Statement, suggest a new action, or report an issue on GitHub.',
+          side: 'top',
+          align: 'center',
+        },
+      },
+      {
+        element: '#action-2026-03-01',
+        popover: {
+          title: 'Get Started! Sign Up for No Kings 3',
+          description:
+            'March 1 is the single most important action in the whole countdown — signing up for the No Kings March on March 28. If you do only one thing, make it this.',
           side: 'top',
           align: 'center',
         },
