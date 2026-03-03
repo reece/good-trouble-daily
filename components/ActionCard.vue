@@ -139,9 +139,9 @@
             v-html="renderMarkdown(action.details)"
           />
 
-          <!-- CTA link -->
+          <!-- CTA link — only in grid view (not calendar, where the modal carries it) -->
           <a
-            v-if="!isFuture && action.link_url && action.link_url !== '#'"
+            v-if="!allowModal && !isFuture && action.link_url && action.link_url !== '#'"
             :href="action.link_url"
             target="_blank"
             rel="noopener noreferrer"
