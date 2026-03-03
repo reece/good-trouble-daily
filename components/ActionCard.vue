@@ -92,7 +92,11 @@
       </div>
 
       <!-- Back -->
-      <div class="action-card-face action-card-back rounded-lg overflow-hidden flex flex-col">
+      <div
+        class="action-card-face action-card-back rounded-lg overflow-hidden flex flex-col"
+        :class="{ 'cursor-pointer': allowModal && !isFuture }"
+        @click="allowModal && !isFuture ? openDetail(props.action) : undefined"
+      >
         <!-- Upper 50%: image -->
         <div class="relative h-1/2 flex-shrink-0">
           <img
@@ -128,7 +132,6 @@
           <!-- Details preview: fades out at the bottom -->
           <div
             v-if="action.details"
-            ref="detailsEl"
             class="details-preview relative flex-1 overflow-hidden min-h-0 text-xs text-isf-slate leading-snug"
             v-html="renderMarkdown(action.details)"
           />
@@ -152,17 +155,7 @@
 
           <!-- Bottom row + share notice: absolutely pinned to bottom of lower half -->
           <div class="absolute bottom-0 left-0 right-0 px-3 pb-3 flex flex-col-reverse gap-1">
-          <div class="flex items-center justify-between">
-            <!-- Details link — only when modal is available and content overflows -->
-            <button
-              v-if="allowModal && isOverflowing"
-              class="text-isf-blue hover:text-isf-blue text-xs font-medium underline underline-offset-2 transition-colors flex-shrink-0"
-              @click.stop="openDetail(props.action)"
-            >
-              Details&hellip;
-            </button>
-            <span v-else class="flex-shrink-0" />
-
+          <div class="flex items-center justify-end">
             <div v-if="!isFuture" class="flex items-center gap-1.5">
               <!-- Share button -->
               <button
@@ -223,7 +216,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject, onMounted, onUnmounted } from 'vue';
+import { ref, computed, inject, onUnmounted } from 'vue';
 import defaultImage from '~/assets/christy-dalmat-y_z3rURYpR0-unsplash.webp';
 import { renderInlineMarkdown, renderMarkdown } from '~/composables/useMarkdown';
 import type { ActionItem } from '~/composables/googleSheets';
@@ -279,24 +272,7 @@ const isFuture = computed(() => {
 const { isDevMode: isDev } = useDevMode();
 const { settings } = useSettings();
 
-// --- Overflow detection (ResizeObserver, no VueUse) ---
-const detailsEl = ref<HTMLElement | null>(null);
-const isOverflowing = ref(false);
-let overflowObserver: ResizeObserver | null = null;
-
-onMounted(() => {
-  if (detailsEl.value) {
-    overflowObserver = new ResizeObserver(() => {
-      if (detailsEl.value) {
-        isOverflowing.value = detailsEl.value.scrollHeight > detailsEl.value.clientHeight;
-      }
-    });
-    overflowObserver.observe(detailsEl.value);
-  }
-});
-
 onUnmounted(() => {
-  overflowObserver?.disconnect();
   if (shareNoticeTimer) clearTimeout(shareNoticeTimer);
 });
 
