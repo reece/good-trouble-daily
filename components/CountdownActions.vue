@@ -13,11 +13,11 @@
           <div id="tour-title" class="flex-1">
             <h1 class="font-sans text-2xl font-black text-isf-blue leading-tight text-center md:text-left mb-1">No Kings Countdown</h1>
             <p class="text-base text-isf-blue text-center md:text-left">
-              A daily action calendar counting down to the nationwide <a href="https://nokings.org/" target="_blank"
+              We're building toward the nationwide <a href="https://nokings.org/" target="_blank"
                 rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors">No Kings March</a> on
-              March 28, 2026.
-              Each day unlocks one civic action you can complete in under 15 minutes. Track your progress, share with
-              friends, and build the movement to resist authoritarianism and defend democracy. Privacy is paramount — all progress is stored locally in your browser, and no personal data is collected or shared. <button class="underline hover:text-isf-blue transition-colors font-bold" @click="navigateTo('/privacy')">Learn more.</button>
+              March 28, 2026 — one action at a time.
+              Each day unlocks something you can complete in under 15 minutes. Track your progress, share with
+              friends, and help fuel the movement to defend democracy. All progress is stored locally in your browser — no personal data is collected or shared. <button class="underline hover:text-isf-blue transition-colors font-bold" @click="navigateTo('/privacy')">Learn more.</button>
             </p>
           </div>
 
