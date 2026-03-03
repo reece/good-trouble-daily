@@ -116,6 +116,17 @@ const closeDetail = () => {
 
 provide('openDetail', openDetail);
 
+type LayoutType = 'grid' | 'calendar';
+
+// Track window width to auto-switch calendar → grid on narrow screens
+const CALENDAR_BREAKPOINT = 1200;
+const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1280);
+const onResize = () => { windowWidth.value = window.innerWidth; };
+
+const effectiveLayout = computed<LayoutType>(() =>
+  windowWidth.value < CALENDAR_BREAKPOINT ? 'grid' : 'calendar'
+);
+
 // Auto-open from URL on load (actions arrive async, so watch for them)
 watch(
   () => props.actions,
@@ -149,12 +160,8 @@ watch(
   { immediate: true },
 );
 
-type LayoutType = 'grid' | 'calendar';
+const { startHomeTour } = useHomeTour();
 
-// Track window width to auto-switch calendar → grid on narrow screens
-const CALENDAR_BREAKPOINT = 1200;
-const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1280);
-const onResize = () => { windowWidth.value = window.innerWidth; };
 onMounted(() => {
   window.addEventListener('resize', onResize);
   // Start home tour for first-time visitors (deferred to let DOM settle)
@@ -164,12 +171,6 @@ onUnmounted(() => {
   window.removeEventListener('resize', onResize);
   if (highlightClearTimer) clearTimeout(highlightClearTimer);
 });
-
-const effectiveLayout = computed<LayoutType>(() =>
-  windowWidth.value < CALENDAR_BREAKPOINT ? 'grid' : 'calendar'
-);
-
-const { startHomeTour } = useHomeTour();
 
 
 </script>
