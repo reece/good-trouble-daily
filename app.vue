@@ -14,4 +14,7 @@ useHead({
     lang: 'en',
   },
 })
+
+const { setBuildMetadata } = useAnalytics()
+onMounted(() => setBuildMetadata())
 </script>

@@ -1,5 +1,44 @@
 export function useAnalytics() {
   const { gtag } = useGtag()
+  const config = useRuntimeConfig()
+
+  /**
+   * Set build metadata as GA global properties. Call once on app mount.
+   * app_version is a reserved GA4 dimension; commit_short_sha and commit_ref are custom.
+   */
+  const setBuildMetadata = () => {
+    if (!import.meta.client)
+      return
+    const sha = config.public.commitSha
+    const withoutDirty = sha.replace(/\+$/, '')
+    const gHashMatch = withoutDirty.match(/-\d+-g[0-9a-f]+$/)
+    const baseTag = gHashMatch
+      ? withoutDirty.slice(0, withoutDirty.length - gHashMatch[0].length)
+      : withoutDirty
+    const commitShortSha = config.public.commitShortSha
+    const commitRef = config.public.commitRef
+    const buildDate = config.public.buildDate
+
+    // Push to GA as global dimensions on every event in this session.
+    gtag('set', {
+      app_version: baseTag,
+      commit_short_sha: commitShortSha,
+      commit_ref: commitRef,
+    })
+
+    // Write to localStorage so future versions can identify what last touched the data.
+    try {
+      localStorage.setItem('isf-build-meta', JSON.stringify({
+        appVersion: baseTag,
+        commitShortSha,
+        commitRef,
+        buildDate,
+      }))
+    }
+    catch {
+      // ignore storage errors (e.g. private browsing quota)
+    }
+  }
 
   /** Fire once per device on true first visit (localStorage-backed). */
   const trackFirstVisit = () => {
@@ -47,6 +86,7 @@ export function useAnalytics() {
   }
 
   return {
+    setBuildMetadata,
     trackFirstVisit,
     trackViewDetail,
     trackCompleteAction,
