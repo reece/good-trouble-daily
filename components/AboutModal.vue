@@ -14,11 +14,11 @@
       >
         <!-- Header -->
         <div class="flex items-center justify-between px-5 py-4 border-b border-isf-tinted flex-shrink-0">
-          <h2 class="font-bold text-isf-navy text-lg">
+          <h2 class="font-bold text-isf-blue-dark text-lg">
             About No Kings Countdown
           </h2>
           <button
-            class="text-isf-slate hover:text-isf-navy bg-transparent rounded-full p-1.5 transition-colors"
+            class="text-isf-slate hover:text-isf-blue-dark bg-transparent rounded-full p-1.5 transition-colors"
             aria-label="Close"
             @click="emit('close')"
           >
@@ -31,48 +31,48 @@
 
         <!-- Body -->
         <div class="px-5 py-5 space-y-4 overflow-y-auto">
-          <p class="text-isf-navy text-base leading-relaxed">
+          <p class="text-isf-blue-dark text-base leading-relaxed">
             The <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue">No Kings</a> march is a nationwide mobilization to defend democratic norms and oppose authoritarian overreach. This app helps people show up for the cause every day in the weeks leading up to the march — not just on the day itself.
           </p>
-          <p class="text-isf-navy text-base leading-relaxed">
+          <p class="text-isf-blue-dark text-base leading-relaxed">
             Each day unlocks one short, meaningful action: calling a representative, sharing a message, supporting an organization, building community, learning and training, or finding local causes to support. <strong>Progress is tracked privately in your browser — nothing is sent to any server.</strong> (<button class="underline hover:text-isf-blue transition-colors" @click="emit('privacy')">
               See our Privacy Policy
             </button>)
           </p>
 
           <div>
-            <h3 class="font-semibold text-isf-navy text-base mb-2">
+            <h3 class="font-semibold text-isf-blue-dark text-base mb-2">
               Actions will be:
             </h3>
             <ul class="space-y-1.5">
-              <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
+              <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
                 <span><strong>Tied to the resistance</strong> — focused on democratic norms, anti-authoritarianism, or civic engagement</span>
               </li>
-              <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
+              <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
                 <span><strong>Broadly accessible</strong> — relevant to people across the US, requiring no special skills or prior activist experience</span>
               </li>
-              <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
+              <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
                 <span><strong>Concrete and specific</strong> — a clear task with a defined end state</span>
               </li>
-              <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
+              <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
                 <span><strong>Completable in under 15 minutes</strong> — no lengthy commitments or sign-ups required</span>
               </li>
-              <li class="flex gap-2 text-base text-isf-navy leading-relaxed">
+              <li class="flex gap-2 text-base text-isf-blue-dark leading-relaxed">
                 <span class="mt-0.5 text-isf-blue flex-shrink-0">✓</span>
                 <span><strong>Varied in type</strong> — contacting representatives, sharing on social media, showing up locally, supporting organizations</span>
               </li>
             </ul>
           </div>
 
-          <p class="text-isf-navy text-base leading-relaxed">
+          <p class="text-isf-blue-dark text-base leading-relaxed">
             Have an idea for an action? <a href="https://forms.gle/2Zic21S9eiaLqVPR7" target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue">Submit a suggestion →</a>
           </p>
 
-          <p class="text-isf-navy text-base leading-relaxed">
+          <p class="text-isf-blue-dark text-base leading-relaxed">
             Images courtesy of our <button class="underline hover:text-isf-blue transition-colors" @click="navigateTo('/artists')">
               contributing artists →
             </button>
@@ -114,7 +114,7 @@
             </div>
           </div>
           <button
-            class="bg-isf-blue hover:bg-isf-blue-dark text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors flex-shrink-0"
+            class="bg-btn-primary hover:bg-btn-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors flex-shrink-0"
             @click="emit('close')"
           >
             Close

@@ -14,11 +14,11 @@
       >
         <!-- Header -->
         <div class="flex items-center justify-between px-5 py-4 border-b border-isf-tinted flex-shrink-0">
-          <h2 class="font-bold text-isf-navy text-lg">
+          <h2 class="font-bold text-isf-blue-dark text-lg">
             Image Artists
           </h2>
           <button
-            class="text-isf-slate hover:text-isf-navy bg-transparent rounded-full p-1.5 transition-colors"
+            class="text-isf-slate hover:text-isf-blue-dark bg-transparent rounded-full p-1.5 transition-colors"
             aria-label="Close"
             @click="emit('close')"
           >
@@ -31,7 +31,7 @@
 
         <!-- Body -->
         <div class="px-5 py-5 overflow-y-auto">
-          <p class="text-isf-navy text-sm leading-relaxed mb-4">
+          <p class="text-isf-blue-dark text-sm leading-relaxed mb-4">
             The images in this countdown were created by these artists. Click a name to visit their profile or portfolio.
           </p>
 
@@ -42,7 +42,7 @@
               :href="artist.url"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-isf-blue hover:text-isf-navy text-sm underline underline-offset-2 transition-colors truncate"
+              class="text-isf-blue hover:text-isf-blue-dark text-sm underline underline-offset-2 transition-colors truncate"
             >{{ artist.name }}</a>
           </div>
           <p v-else class="text-sm text-isf-slate italic">
@@ -53,7 +53,7 @@
         <!-- Footer -->
         <div class="px-5 pb-5 pt-3 border-t border-isf-tinted flex justify-end flex-shrink-0">
           <button
-            class="bg-isf-blue hover:bg-isf-blue-dark text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
+            class="bg-btn-primary hover:bg-btn-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors"
             @click="emit('close')"
           >
             Close

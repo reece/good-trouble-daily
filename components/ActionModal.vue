@@ -35,7 +35,7 @@
             :href="action.image_back.artist_url || action.image_front.artist_url"
             target="_blank"
             rel="noopener noreferrer"
-            class="absolute bottom-3 left-3 bg-isf-navy/90 text-white text-[10px] px-1.5 py-0.5 rounded leading-none hover:bg-isf-navy transition-colors"
+            class="absolute bottom-3 left-3 bg-isf-blue-dark/90 text-white text-[10px] px-1.5 py-0.5 rounded leading-none hover:bg-isf-blue-dark transition-colors"
             @click.stop
           >{{ action.image_back.artist_name || action.image_front.artist_name || '©' }}</a>
 
@@ -56,7 +56,7 @@
         <div class="flex-1 min-h-0 overflow-y-auto p-5 flex flex-col gap-4">
           <div class="flex items-start gap-2">
             <h2
-              class="font-bold text-isf-navy text-lg leading-snug flex-1"
+              class="font-bold text-isf-blue-dark text-lg leading-snug flex-1"
               v-html="renderInlineMarkdown(action.headline)"
             />
             <!-- Share — always available for revealed actions -->
@@ -78,7 +78,7 @@
             <button
               id="tour-action-complete"
               class="flex-shrink-0 rounded-full w-8 h-8 flex items-center justify-center shadow transition-colors mt-0.5"
-              :class="isComplete(action.date) ? 'bg-isf-green hover:bg-isf-green-dark' : 'bg-gray-400/80 hover:bg-gray-500'"
+              :class="isComplete(action.date) ? 'bg-state-complete hover:bg-state-complete-dark' : 'bg-state-incomplete/80 hover:brightness-110'"
               :title="isComplete(action.date) ? 'Mark incomplete' : 'Mark complete'"
               @click="handleToggleComplete(action.date)"
             >
@@ -90,7 +90,7 @@
 
           <div
             v-if="action.details"
-            class="markdown-content text-isf-navy text-sm leading-relaxed"
+            class="markdown-content text-isf-blue-dark text-sm leading-relaxed"
             v-html="renderMarkdown(action.details)"
           />
 
@@ -101,7 +101,7 @@
             :href="action.link_url"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 bg-isf-red hover:bg-isf-red-dark text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-colors"
+            class="inline-flex items-center justify-center gap-2 bg-btn-primary hover:bg-btn-primary-dark text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-colors"
             @click="trackCtaClick(formatDateKey(action.date), action.link_url)"
           >
             {{ action.link_text || 'Learn more' }}
@@ -122,7 +122,7 @@
         >
           <div
             v-if="shareNotice"
-            class="absolute bottom-4 left-4 right-4 bg-isf-navy text-white text-xs text-center px-4 py-2.5 rounded-lg shadow-lg"
+            class="absolute bottom-4 left-4 right-4 bg-isf-blue-dark text-white text-xs text-center px-4 py-2.5 rounded-lg shadow-lg"
           >
             {{ shareNotice }}
           </div>
@@ -237,12 +237,12 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
   font-style: italic;
 }
 .markdown-content :deep(a) {
-  color: var(--color-isf-blue, #1b5fa3);
+  color: var(--isf-blue);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .markdown-content :deep(a:hover) {
-  color: var(--color-isf-blue-dark, #134880);
+  color: var(--isf-blue-dark);
 }
 .markdown-content :deep(ul) {
   list-style-type: disc;

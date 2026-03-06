@@ -3,7 +3,7 @@
     class="action-card rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
     :class="[
       { flipped: isFlipped },
-      isToday ? 'ring-4 ring-isf-blue ring-offset-2' : (props.highlight ? 'ring-4 ring-isf-gold ring-offset-2' : ''),
+      isToday ? 'ring-4 ring-state-today ring-offset-2' : (props.highlight ? 'ring-4 ring-state-highlight ring-offset-2' : ''),
     ]"
   >
     <div class="action-card-inner">
@@ -29,7 +29,7 @@
         <!-- Today badge -->
         <div
           v-if="isToday"
-          class="absolute top-2 right-2 bg-isf-blue text-white text-xs font-semibold px-2 py-0.5 rounded-full"
+          class="absolute top-2 right-2 bg-state-today text-white text-xs font-semibold px-2 py-0.5 rounded-full"
         >
           Today
         </div>
@@ -48,7 +48,7 @@
           :href="action.image_front.artist_url"
           target="_blank"
           rel="noopener noreferrer"
-          class="image-attribution absolute bottom-2 left-2 bg-isf-navy/90 text-white px-1.5 py-0.5 rounded leading-none hover:bg-isf-navy transition-colors"
+          class="image-attribution absolute bottom-2 left-2 bg-isf-blue-dark/90 text-white px-1.5 py-0.5 rounded leading-none hover:bg-isf-blue-dark transition-colors"
           @click.stop
         >{{ action.image_front.artist_name || '©' }}</a>
 
@@ -77,21 +77,13 @@
         <button
           v-if="!isFuture"
           class="absolute bottom-2 right-2 rounded-full w-7 h-7 flex items-center justify-center shadow transition-colors"
-          :class="isComplete(action.date) ? 'bg-isf-green hover:brightness-110' : isToday ? 'bg-gray-400 hover:brightness-110' : 'bg-isf-red hover:brightness-110'"
-          :title="isComplete(action.date) ? 'Completed – click for details' : isToday ? 'Still time today – click for details' : 'Not completed – click for details'"
+          :class="isComplete(action.date) ? 'bg-state-complete hover:brightness-110' : 'bg-state-incomplete hover:brightness-110'"
+          :title="isComplete(action.date) ? 'Completed – click for details' : 'Not completed – click for details'"
           @click.stop="openDetail(props.action)"
         >
-          <template v-if="isComplete(action.date) || isToday">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </template>
-          <template v-else>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </template>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
         </button>
       </div>
 
@@ -121,7 +113,7 @@
             :href="action.image_back.artist_url"
             target="_blank"
             rel="noopener noreferrer"
-            class="image-attribution absolute bottom-2 left-2 bg-isf-navy/90 text-white px-1.5 py-0.5 rounded leading-none hover:bg-isf-navy transition-colors"
+            class="image-attribution absolute bottom-2 left-2 bg-isf-blue-dark/90 text-white px-1.5 py-0.5 rounded leading-none hover:bg-isf-blue-dark transition-colors"
             @click.stop
           >{{ action.image_back.artist_name || '©' }}</a>
         </div>
@@ -129,7 +121,7 @@
         <!-- Lower 50%: headline + details preview + actions -->
         <div class="h-1/2 flex-shrink-0 bg-white relative flex flex-col px-3 pt-2 pb-12 gap-1 min-h-0">
           <p
-            class="font-bold text-isf-navy text-sm leading-snug line-clamp-2 flex-shrink-0"
+            class="font-bold text-isf-blue-dark text-sm leading-snug line-clamp-2 flex-shrink-0"
             v-html="renderInlineMarkdown(action.headline)"
           />
 
@@ -146,7 +138,7 @@
             :href="action.link_url"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-1.5 bg-isf-red hover:bg-isf-red-dark text-white font-semibold text-xs px-3 py-2 rounded-lg transition-colors flex-shrink-0"
+            class="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-btn-primary-dark text-white font-semibold text-xs px-3 py-2 rounded-lg transition-colors flex-shrink-0"
             @click.stop
           >
             {{ action.link_text || 'Learn more' }}
@@ -180,21 +172,13 @@
                 <!-- Completion toggle (directly toggles completion, no modal) -->
                 <button
                   class="rounded-full w-7 h-7 flex items-center justify-center shadow transition-colors"
-                  :class="isComplete(action.date) ? 'bg-isf-green hover:brightness-110' : isToday ? 'bg-gray-400 hover:brightness-110' : 'bg-isf-red hover:brightness-110'"
+                  :class="isComplete(action.date) ? 'bg-state-complete hover:brightness-110' : 'bg-state-incomplete hover:brightness-110'"
                   :title="isComplete(action.date) ? 'Mark incomplete' : 'Mark complete'"
                   @click.stop="handleToggleComplete(action.date)"
                 >
-                  <template v-if="isComplete(action.date) || isToday">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </template>
-                  <template v-else>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                  </template>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
                 </button>
               </div>
             </div>
@@ -208,7 +192,7 @@
             >
               <div
                 v-if="shareNotice"
-                class="text-[10px] text-isf-navy bg-isf-navy/10 rounded px-2 py-1 text-center leading-tight"
+                class="text-[10px] text-isf-blue-dark bg-isf-blue-dark/10 rounded px-2 py-1 text-center leading-tight"
               >
                 {{ shareNotice }}
               </div>

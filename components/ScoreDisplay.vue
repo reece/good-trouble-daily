@@ -13,7 +13,7 @@
       </div>
       <button
         id="tour-share-progress"
-        class="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-isf-blue text-white text-sm font-semibold hover:bg-isf-navy transition-colors whitespace-nowrap"
+        class="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-btn-primary text-white text-sm font-semibold hover:bg-btn-primary-dark transition-colors whitespace-nowrap"
         @click="handleShare"
       >
         <Share2 :size="14" />
@@ -63,7 +63,7 @@
     >
       <div
         v-if="shareNotice"
-        class="absolute top-full mt-2 right-0 bg-isf-navy text-white text-xs text-center px-4 py-2.5 rounded-lg shadow-lg whitespace-nowrap z-10"
+        class="absolute top-full mt-2 right-0 bg-isf-blue-dark text-white text-xs text-center px-4 py-2.5 rounded-lg shadow-lg whitespace-nowrap z-10"
       >
         {{ shareNotice }}
       </div>
@@ -164,12 +164,12 @@ const calendarDots = computed(() => {
         isToday,
         empty: false,
         cls: isCompleted
-          ? 'bg-isf-green'
+          ? 'bg-state-complete'
           : isToday
-            ? 'bg-isf-gold'
+            ? 'bg-state-today'
             : isAvailable
-              ? 'bg-isf-red'
-              : 'bg-gray-200',
+              ? 'bg-state-incomplete'
+              : 'bg-state-future',
       })
     }
     else {

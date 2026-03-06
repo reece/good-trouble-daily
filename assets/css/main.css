@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  /* Color tokens */
+  /* Brand color tokens */
   --isf-blue-dark:    #1a3570;
   --isf-blue:         #2547a0;
   --isf-blue-light:   #c8d8f4;
@@ -19,16 +19,23 @@
   --isf-slate:        #6b7a99;
   --isf-tinted:       #e8edf5;
 
-  /* Font stacks */
-  --font-display: 'Source Sans 3', system-ui, sans-serif;
-  --font-body:    'Source Sans 3', system-ui, sans-serif;
-  --font-mono:    'Source Code Pro', monospace;
+  /* Semantic state colors */
+  --state-today:         var(--isf-blue);
+  --state-complete:      var(--isf-green);
+  --state-complete-dark: var(--isf-green-dark);
+  --state-incomplete:    #9ca3af;
+  --state-future:        #e5e7eb;
+  --state-highlight:     var(--isf-gold);
+
+  /* Semantic button colors */
+  --btn-primary:      var(--isf-blue);
+  --btn-primary-dark: var(--isf-blue-dark);
 }
 
 body {
   background: #ffffff;
   color: var(--isf-blue);
-  font-family: var(--font-body);
+  font-family: 'Source Sans 3', system-ui, sans-serif;
 }
 
 @layer components {
@@ -50,32 +57,25 @@ body {
 
   /* ── Typography ──────────────────────────── */
   .heading-1 {
-    font-family: var(--font-display);
-    @apply text-5xl font-black leading-tight text-isf-blue;
+    @apply font-display text-5xl font-black leading-tight text-isf-blue;
   }
   .heading-2 {
-    font-family: var(--font-display);
-    @apply text-3xl font-bold leading-snug text-isf-blue;
+    @apply font-display text-3xl font-bold leading-snug text-isf-blue;
   }
   .heading-3 {
-    font-family: var(--font-body);
-    @apply text-[22px] font-bold text-isf-blue tracking-tight;
+    @apply font-sans text-[22px] font-bold text-isf-blue tracking-tight;
   }
   .eyebrow {
-    font-family: var(--font-body);
-    @apply text-base font-bold uppercase tracking-widest text-isf-blue;
+    @apply font-sans text-base font-bold uppercase tracking-widest text-isf-blue;
   }
   .text-secondary {
-    font-family: var(--font-body);
-    @apply text-[13px] font-light text-isf-slate;
+    @apply font-sans text-[13px] font-light text-isf-slate;
   }
   .mono-label {
-    font-family: var(--font-mono);
-    @apply text-xs uppercase tracking-widest text-isf-slate;
+    @apply font-mono text-xs uppercase tracking-widest text-isf-slate;
   }
   .caption {
-    font-family: var(--font-body);
-    @apply text-xs italic text-isf-slate;
+    @apply font-sans text-xs italic text-isf-slate;
   }
 
   /* ── Links ───────────────────────────────── */
@@ -86,8 +86,7 @@ body {
 
   /* ── Badges ──────────────────────────────── */
   .badge {
-    font-family: var(--font-mono);
-    @apply inline-block text-[11px] font-medium uppercase tracking-wider px-2 py-0.5 rounded;
+    @apply font-mono inline-block text-[11px] font-medium uppercase tracking-wider px-2 py-0.5 rounded;
   }
   .badge-blue  { @apply badge bg-isf-blue text-white; }
   .badge-red   { @apply badge bg-isf-red text-white; }
@@ -121,7 +120,7 @@ body {
   .card-header-red      { @apply bg-isf-red text-white; }
   .card-header-gold     { @apply bg-isf-gold text-isf-blue; }
   .card-header-blue-dark { @apply bg-isf-blue-dark text-white; }
-  .card-title { font-family: var(--font-display); @apply text-lg font-bold; }
+  .card-title { @apply font-display text-lg font-bold; }
   .card-sub   { @apply text-xs opacity-80 mt-0.5; }
   .card-body  { @apply px-5 py-4 text-sm leading-relaxed text-gray-700; }
   .card-footer { @apply px-5 pb-3.5 flex justify-end; }
