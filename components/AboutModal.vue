@@ -108,49 +108,54 @@
         <!-- Footer -->
         <div class="px-5 pb-5 pt-3 border-t border-isf-tinted flex items-end justify-between gap-4 flex-shrink-0">
           <!-- Build & data info -->
-          <div class="text-[10px] leading-[0.8rem] text-isf-blue space-y-1">
-            <div>
-              <span class="font-semibold">code: </span>
+          <dl class="text-[10px] leading-[0.8rem] text-isf-blue grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 items-baseline">
+            <dt class="font-semibold text-right">
+              code
+            </dt>
+            <dd class="m-0">
               <a
                 :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/releases/tag/${buildInfo.baseTag}`"
                 target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors"
-              >{{
-                buildInfo.baseTag }}</a>{{ buildInfo.offset }}+<a
+              >{{ buildInfo.baseTag }}</a>{{ buildInfo.offset }}+<a
                 :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/commit/${buildInfo.shortSha}`"
                 target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors"
-              >{{
-                buildInfo.shortSha }}</a>
+              >{{ buildInfo.shortSha }}</a>
               (<a
-                :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/tree/${buildInfo.ref}`" target="_blank"
-                rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors"
-              >{{ buildInfo.ref
-              }}</a>)
-            </div>
-            <div>
-              <span class="font-semibold">deployed: </span>
+                :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/tree/${buildInfo.ref}`"
+                target="_blank" rel="noopener noreferrer" class="underline hover:text-isf-blue transition-colors"
+              >{{ buildInfo.ref }}</a>)
+            </dd>
+            <dt class="font-semibold text-right">
+              deployed
+            </dt>
+            <dd class="m-0">
               <a
                 v-if="buildInfo.runUrl" :href="buildInfo.runUrl" target="_blank" rel="noopener noreferrer"
                 class="underline hover:text-isf-blue transition-colors"
               >{{ buildInfo.date }}</a>
               <span v-else>{{ buildInfo.date }}</span>
-            </div>
-            <div v-if="fetchedAt" class="flex items-center gap-1">
-              <span class="font-semibold">actions: </span>
-              <button
-                class="flex items-center gap-1 underline hover:text-isf-blue transition-colors cursor-pointer"
-                title="Click to refresh data" @click="emit('refresh')"
-              >
-                <span>refreshed at {{ dataFreshnessLabel }}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+            </dd>
+            <template v-if="fetchedAt">
+              <dt class="font-semibold text-right">
+                actions
+              </dt>
+              <dd class="m-0">
+                <button
+                  class="flex items-center gap-1 underline hover:text-isf-blue transition-colors cursor-pointer"
+                  title="Click to refresh data" @click="emit('refresh')"
                 >
-                  <polyline points="23 4 23 10 17 10" />
-                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-                </svg>
-              </button>
-            </div>
-          </div>
+                  <span>refreshed at {{ dataFreshnessLabel }}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                  >
+                    <polyline points="23 4 23 10 17 10" />
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                  </svg>
+                </button>
+              </dd>
+            </template>
+          </dl>
           <button
             class="bg-btn-primary hover:bg-btn-primary-dark text-white font-semibold text-sm px-4 py-2 rounded-lg transition-colors flex-shrink-0"
             @click="emit('close')"
