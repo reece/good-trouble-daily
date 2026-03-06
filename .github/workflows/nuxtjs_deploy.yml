@@ -30,6 +30,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          fetch-tags: true
       
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -60,12 +61,20 @@ jobs:
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Get version info
+        id: version
+        run: |
+          echo "describe=$(git describe --always --tags --dirty=+)" >> $GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       
       - name: Generate static site
         run: pnpm generate
         env:
+          NUXT_PUBLIC_COMMIT_SHA: ${{ steps.version.outputs.describe }}
+          NUXT_PUBLIC_COMMIT_SHORT_SHA: ${{ steps.version.outputs.short_sha }}
           NUXT_PUBLIC_COMMIT_REF: ${{ github.ref_name }}
-          NUXT_PUBLIC_BUILD_DATE: ${{ github.event.head_commit.timestamp }}
+          NUXT_PUBLIC_BUILD_DATE: ${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
           NUXT_PUBLIC_RUN_ID: ${{ github.run_id }}
       
       - name: Upload artifact
