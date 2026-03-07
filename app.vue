@@ -15,10 +15,9 @@ useHead({
   },
 })
 
-const { init: initBuildMeta } = useBuildMeta()
+useBuildData()
 const { setBuildMetadata } = useAnalytics()
 onMounted(() => {
-  initBuildMeta()
   setBuildMetadata()
 })
 </script>

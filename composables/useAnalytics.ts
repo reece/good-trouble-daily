@@ -8,11 +8,11 @@ export function useAnalytics() {
   const setBuildMetadata = () => {
     if (!import.meta.client)
       return
-    const { appVersion, commitShortSha, commitRef } = useBuildMeta()
+    const { appVersion, commitShortSha, commitRef } = useBuildData().value
     gtag('set', {
-      app_version: appVersion.value,
-      commit_short_sha: commitShortSha.value,
-      commit_ref: commitRef.value,
+      app_version: appVersion,
+      commit_short_sha: commitShortSha,
+      commit_ref: commitRef,
     })
   }
 
