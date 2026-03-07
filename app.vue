@@ -15,6 +15,9 @@ useHead({
   },
 })
 
+useBuildData()
 const { setBuildMetadata } = useAnalytics()
-onMounted(() => setBuildMetadata())
+onMounted(() => {
+  setBuildMetadata()
+})
 </script>
