@@ -46,3 +46,8 @@
 - Merge using a **merge commit** (`gh pr merge --merge`). Never use GitHub's squash merge button (it misattributes commits to the merger) or the rebase merge button.
 - After merge, delete the feature branch and confirm the issue is closed
 - **Post-merge**: confirm CI passes on `main`. If it fails, a direct hotfix commit to `main` is permitted without a new branch or PR — this is the only exception to the no-commits-to-main rule. Note the hotfix in a comment on the original issue.
+
+
+### Git and GitHub
+- gh is generally available and logged in. If it isn't, alert and stop.
+- When interacting with command line tools, consider whether command line arguments are likely to be mangled by the shell; use here docs when available and particularly for message bodies.
