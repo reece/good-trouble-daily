@@ -26,17 +26,23 @@ The No Kings March is a nationwide mobilization to defend democratic norms and o
 ### Setup
 
 ```bash
-pnpm install   # install dependencies
-pnpm dev       # start dev server at http://localhost:3000
-pnpm generate  # build static site
-pnpm preview   # preview production build
+pnpm install      # install dependencies
+pnpm dev          # start dev server at http://localhost:3000
+pnpm generate     # build static site
+pnpm preview      # preview production build
+pnpm typecheck    # type-check with vue-tsc
+pnpm lint         # ESLint check
+pnpm lint:fix     # ESLint auto-fix
+pnpm lint:css     # Stylelint check
+pnpm lint:css:fix # Stylelint auto-fix
 ```
 
 ### Contributing Code
 
 1. Fork the repo and create a feature branch
 2. Reference the relevant GitHub issue in your branch name or commit message
-3. Open a pull request against `main`
+3. Before opening for review, ensure `pnpm typecheck`, `pnpm generate`, and pre-commit hooks all pass
+4. Open a pull request against `main`
 
 Every commit to `main` is automatically deployed to GitHub Pages (typically ~90 seconds).
 

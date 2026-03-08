@@ -52,3 +52,12 @@
 - gh is generally available and logged in. If it isn't, alert and stop.
 - When interacting with command line tools, consider whether command line arguments are likely to be mangled by the shell; use here docs when available and particularly for message bodies.
 - Some commands invoke pagers automatically (e.g., gh); consider invoking without paging or piping to cat
+
+## Code Style
+
+Config: `eslint.config.ts` using [`@antfu/eslint-config`](https://github.com/antfu/eslint-config).
+
+- **Vue SFC block order:** `<template>` → `<script>` → `<style>` (enforced by lint)
+- **Indent:** 2 spaces · **Quotes:** single · **Semicolons:** none
+- `ts/no-unsafe-assignment` is disabled — `JSON.parse` and `localStorage` patterns are acceptable
+- `node/prefer-global/process` is disabled — `process.env` is idiomatic in Nuxt configs
