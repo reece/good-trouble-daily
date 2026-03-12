@@ -2,28 +2,25 @@
   <div>
     <!-- Header -->
     <header class="bg-white border-b-4 border-isf-blue shadow-md">
-      <div class="max-w-7xl mx-auto px-4 py-6">
-        <div class="flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4">
-          <!-- Hero text -->
-          <div id="tour-title" class="flex-1">
-            <h1 class="font-sans text-4xl font-black text-isf-blue leading-tight text-center md:text-left mb-1">
-              No Kings 3 Countdown
-            </h1>
-            <p class="text-base text-isf-blue text-center md:text-left">
-              Create a daily habit of small actions with big impacts that build momentum toward <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-isf-blue transition-colors">No Kings 3</a> on March 28. <br>Track and share your progress to help build the community that will repel authoritarianism in the United States.
-            </p>
-          </div>
+      <div class="relative max-w-7xl mx-auto px-4 py-3 pr-14">
+        <!-- Hamburger trigger — absolute upper-right -->
+        <button
+          id="tour-score"
+          class="absolute top-3 right-4 text-isf-blue hover:opacity-70 transition-opacity p-1.5 rounded"
+          aria-label="Open menu"
+          @click="menuOpen = true"
+        >
+          <Menu :size="24" />
+        </button>
 
-          <!-- Menu tray trigger -->
-          <button
-            id="tour-score"
-            class="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-isf-blue text-isf-blue hover:bg-isf-blue hover:text-white transition-colors font-semibold text-sm flex-shrink-0"
-            aria-label="Open menu"
-            @click="menuOpen = true"
-          >
-            <Menu :size="18" />
-            <span>Menu</span>
-          </button>
+        <!-- Hero text -->
+        <div id="tour-title">
+          <h1 class="font-sans text-4xl font-black text-isf-blue leading-tight mb-1">
+            No Kings 3 Countdown
+          </h1>
+          <p class="text-base text-isf-blue">
+            Create a daily habit of small actions with big impacts that build momentum toward <a href="https://nokings.org/" target="_blank" rel="noopener noreferrer" class="font-bold underline hover:text-isf-blue transition-colors">No Kings 3</a> on March 28. <br>Track and share your progress to help build the community that will repel authoritarianism in the United States.
+          </p>
         </div>
       </div>
     </header>
