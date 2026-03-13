@@ -12,11 +12,64 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Get version info
+        id: version
+        run: |
+          echo "describe=$(git describe --always --tags --dirty=+)" >> $GITHUB_OUTPUT
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Load .env into environment
+        run: grep -v '^#' .env | grep '=' >> $GITHUB_ENV
+
+      - name: Pull Vercel environment
+        run: npx vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build
+        run: npx vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          NUXT_PUBLIC_COMMIT_SHA: ${{ steps.version.outputs.describe }}
+          NUXT_PUBLIC_COMMIT_SHORT_SHA: ${{ steps.version.outputs.short_sha }}
+          NUXT_PUBLIC_COMMIT_REF: ${{ github.head_ref }}
+          NUXT_PUBLIC_BUILD_DATE: ${{ github.event.pull_request.updated_at }}
+          NUXT_PUBLIC_RUN_ID: ${{ github.run_id }}
 
       - name: Deploy to Vercel Preview
         id: deploy
         run: |
-          url=$(npx vercel --token=${{ secrets.VERCEL_TOKEN }} --yes \
+          url=$(npx vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} \
             --meta githubCommitRef=${{ github.head_ref }} \
             --meta githubCommitSha=${{ github.sha }} \
             --meta githubOrg=${{ github.repository_owner }} \
