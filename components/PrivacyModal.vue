@@ -31,26 +31,23 @@
           <p class="text-isf-blue-dark text-base leading-relaxed">
             This site uses <strong>Google Analytics</strong> to collect anonymous usage data (pages visited, time on
             site, city-level location). We have disabled Google signals and ads personalization. Google Analytics does
-            not record your full IP address.
+            not record your full IP address. See <a
+              href="https://policies.google.com/privacy"
+              target="_blank" rel="noopener" class="underline hover:text-isf-blue"
+            >Google's Privacy Policy</a>.
           </p>
           <p class="text-isf-blue-dark text-base leading-relaxed">
             This site also uses <strong>Plausible Analytics</strong>, a privacy-focused service that sets no cookies
             and collects no personal data or cross-site identifiers. Plausible records only anonymous, aggregate event
-            counts (e.g. which actions were viewed or completed).
+            counts (e.g. which actions were viewed or completed). See <a
+              href="https://plausible.io/data-policy"
+              target="_blank" rel="noopener" class="underline hover:text-isf-blue"
+            >Plausible's data policy</a>.
           </p>
           <p class="text-isf-blue-dark text-base leading-relaxed">
             <strong>We use these data solely to understand how many people visit and which content is most useful to
               users collectively — not to identify you, build profiles, or target advertising. We do not sell or share
               visitor data with anyone.</strong>
-          </p>
-          <p class="text-isf-blue-dark text-base leading-relaxed">
-            For more detail, see <a
-              href="https://policies.google.com/privacy"
-              target="_blank" rel="noopener" class="underline hover:text-isf-blue"
-            >Google's Privacy Policy</a> and <a
-              href="https://plausible.io/data-policy"
-              target="_blank" rel="noopener" class="underline hover:text-isf-blue"
-            >Plausible's data policy</a>.
           </p>
           <p class="text-isf-blue-dark text-base leading-relaxed">
             Your action progress is saved locally on your device only and is transmitted only when you explicitly choose
