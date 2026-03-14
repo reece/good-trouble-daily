@@ -87,7 +87,7 @@ const reversedIndex = computed(() =>
   [...releaseVersionIndex].reverse(),
 )
 
-const selectedVersion = ref(appVersion)
+const selectedVersion = ref(releaseVersionIndex.at(-1)?.version ?? appVersion)
 const renderedContent = ref('')
 const fetchError = ref(false)
 
@@ -120,6 +120,8 @@ watch(selectedVersion, version => loadNotes(version), { immediate: true })
 
 /** Format an ISO date string (YYYY-MM-DD) as "Month D, YYYY". */
 function formatDate(iso: string): string {
+  if (!iso)
+    return '(future release)'
   // Append midday time to avoid date-shifting across timezone offsets
   return new Date(`${iso}T12:00:00`).toLocaleDateString('en-US', {
     year: 'numeric',

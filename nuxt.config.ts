@@ -1,4 +1,6 @@
 import { execSync } from 'node:child_process'
+import { readdirSync } from 'node:fs'
+import { join } from 'node:path'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import 'dotenv/config'
 
@@ -30,35 +32,35 @@ const gitShortSha = (() => {
 })()
 
 /**
- * Build an index of release versions from git tags.
- * Only X.Y.0 tags are included — no patch releases.
- * In non-production builds, X.Y.0-prerelease tags (e.g. 1.3.0-rc.0) are
- * also included so release notes can be previewed before a final tag exists.
- * Each entry uses the full tag name as the version key.
- * Sorted by version using git's version:refname sort (correct numeric order).
+ * Build an index of release versions from markdown files in public/releases/.
+ * Each <version>.md file is included. The date is taken from the corresponding
+ * git tag (refs/tags/<version>); files without a matching tag get an empty date.
+ * Sorted numerically by version (major.minor.patch).
  */
-const isDev = process.env.NODE_ENV !== 'production'
-
 const releaseVersionIndex: { version: string, date: string }[] = (() => {
   try {
-    const output = execSync(
-      'git for-each-ref --sort=version:refname --format="%(refname:short) %(creatordate:short)" refs/tags',
-    ).toString().trim()
-    // Production: only X.Y.0 final tags. Dev: also X.Y.0-prerelease tags.
-    const tagRe = isDev
-      ? /^\d+\.\d+\.0(-[\w.]+)?$/
-      : /^\d+\.\d+\.0$/
+    const dir = join(process.cwd(), 'public/releases')
+    const files = readdirSync(dir)
     const entries: { version: string, date: string }[] = []
-    for (const line of output.split('\n')) {
-      const spaceIdx = line.indexOf(' ')
-      if (spaceIdx === -1)
+    for (const file of files) {
+      const m = file.match(/^(\d+\.\d+\.\d+(?:-[\w.]+)?)\.md$/)
+      if (!m)
         continue
-      const tag = line.slice(0, spaceIdx)
-      const date = line.slice(spaceIdx + 1)
-      if (!tagRe.test(tag) || !date)
-        continue
-      entries.push({ version: tag, date })
+      const version = m[1]
+      let date = ''
+      try {
+        date = execSync(
+          `git for-each-ref --format="%(creatordate:short)" refs/tags/${version}`,
+        ).toString().trim()
+      }
+      catch {
+        // no tag — leave date empty
+      }
+      entries.push({ version, date })
     }
+    entries.sort((a, b) =>
+      a.version.localeCompare(b.version, undefined, { numeric: true }),
+    )
     return entries
   }
   catch {
