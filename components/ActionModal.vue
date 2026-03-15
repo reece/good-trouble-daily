@@ -121,7 +121,7 @@
           <!-- CTA link -->
           <a
             v-if="action.link_url && action.link_url !== '#'"
-            :href="action.link_url"
+            :href="withUtm(action.link_url)"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center justify-center gap-2 bg-btn-primary hover:bg-btn-primary-dark text-white font-semibold text-sm px-4 py-2.5 rounded-lg transition-colors"
@@ -270,6 +270,17 @@ onUnmounted(() => {
   if (shareNoticeTimer)
     clearTimeout(shareNoticeTimer)
 })
+
+function withUtm(url: string): string {
+  try {
+    const u = new URL(url)
+    u.searchParams.set('utm_source', 'nokingscountdown.org')
+    return u.toString()
+  }
+  catch {
+    return url
+  }
+}
 </script>
 
 <style scoped>
