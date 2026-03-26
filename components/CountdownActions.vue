@@ -38,12 +38,24 @@
 
     <!-- Sliding menu tray -->
     <MenuTray :actions="props.actions" :open="menuOpen" @close="menuOpen = false" />
+
+    <!-- Go To Today button — visible only when the today card is off-screen -->
+    <Transition name="fade">
+      <button
+        v-if="!todayInView"
+        class="btn-gold rounded-full fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 shadow-lg z-40"
+        @click="scrollToToday"
+      >
+        <CalendarDays :size="18" />
+        Go To Today
+      </button>
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { ActionItem } from '~/composables/googleSheets'
-import { Menu } from 'lucide-vue-next'
+import { CalendarDays, Menu } from 'lucide-vue-next'
 import { computed, nextTick, onMounted, onUnmounted, provide, ref, watch } from 'vue'
 import { formatDateKey } from '~/composables/dateHelpers'
 import ActionModal from './ActionModal.vue'
@@ -64,6 +76,28 @@ const selectedAction = ref<ActionItem | null>(null)
 const highlightDate = ref<string | null>(null)
 let highlightClearTimer: ReturnType<typeof setTimeout> | null = null
 const { isDevMode: isDev } = useDevMode()
+
+// --- Go To Today button ---
+const todayInView = ref(true)
+let todayObserver: IntersectionObserver | null = null
+
+function scrollToToday() {
+  const todayKey = formatDateKey(new Date())
+  document.getElementById(`action-${todayKey}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+}
+
+function observeTodayCard() {
+  const todayKey = formatDateKey(new Date())
+  const el = document.getElementById(`action-${todayKey}`)
+  if (!el)
+    return
+  todayObserver?.disconnect()
+  todayObserver = new IntersectionObserver(
+    ([entry]) => { todayInView.value = entry.isIntersecting },
+    { threshold: 0.1 },
+  )
+  todayObserver.observe(el)
+}
 
 function isActionFuture(action: ActionItem) {
   const today = new Date()
@@ -144,6 +178,9 @@ watch(
         router.replace({ query: q })
       }
     }
+    if (actions.length) {
+      nextTick(observeTodayCard)
+    }
   },
   { immediate: true },
 )
@@ -155,5 +192,18 @@ onUnmounted(() => {
   window.removeEventListener('resize', onResize)
   if (highlightClearTimer)
     clearTimeout(highlightClearTimer)
+  todayObserver?.disconnect()
 })
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
