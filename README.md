@@ -1,8 +1,8 @@
-# No Kings Countdown
+# Good Trouble Daily
 
-**[nokingscountdown.org](https://nokingscountdown.org)** — A daily civic action calendar counting down to the [No Kings March](https://nokings.org/) on **March 28, 2026**. Incubated in [Indvisible SF](https://indvisiblesf.org/) and built by volunteers.
+**[goodtroubledaily.org](https://goodtroubledaily.org)** — A daily civic action calendar that helps people build a lasting habit of resistance. Incubated in [Indivisible SF](https://indivisiblesf.org/) and built by volunteers.
 
-The No Kings March is a nationwide mobilization to defend democratic norms and oppose authoritarian overreach. This app helps people show up for the cause every day in the weeks leading up to the march — not just on the day itself. Each day unlocks one action completable in under 15 minutes: calling a representative, sharing a message, supporting an organization, or showing up locally. Progress is tracked privately in your browser — nothing is sent to any server.
+One action, completable in under 15 minutes, every day: calling a representative, sharing a message, supporting an organization, or showing up locally. Progress is tracked privately in your browser — nothing is sent to any server.
 
 ## What Kinds of Actions are Available?
 
@@ -15,7 +15,7 @@ The No Kings March is a nationwide mobilization to defend democratic norms and o
 ## For Developers
 
 **Stack:** Vue 3 · Nuxt 3 (static generation) · Tailwind CSS  
-**Issues:** [GitHub Issues](https://github.com/IndivisibleSFOrg/good-trouble-daily/issues)
+**Issues:** [GitHub Issues](https://github.com/reece/good-trouble-daily/issues)
 
 ### How It Works
 

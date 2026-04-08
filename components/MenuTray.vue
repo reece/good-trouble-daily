@@ -97,7 +97,7 @@
               </li>
               <li>
                 <a
-                  href="https://github.com/IndivisibleSFOrg/no-kings-countdown"
+                  :href="repoUrl"
                   target="_blank" rel="noopener noreferrer"
                   class="tray-link"
                 >
@@ -106,7 +106,7 @@
               </li>
               <li>
                 <a
-                  href="https://github.com/IndivisibleSFOrg/no-kings-countdown/issues"
+                  :href="`${repoUrl}/issues`"
                   target="_blank" rel="noopener noreferrer"
                   class="tray-link"
                 >
@@ -141,7 +141,7 @@
                   class="underline hover:text-isf-blue-dark transition-colors"
                 >{{ buildInfo.ref }}</a>
                 (<a
-                  :href="`https://github.com/IndivisibleSFOrg/no-kings-countdown/commit/${buildInfo.shortSha}`"
+                  :href="`${repoUrl}/commit/${buildInfo.shortSha}`"
                   target="_blank" rel="noopener noreferrer"
                   class="underline hover:text-isf-blue-dark transition-colors"
                 >{{ buildInfo.shortSha }}</a>{{ buildInfo.isDirty ? '+' : '' }})
@@ -191,19 +191,25 @@ interface Props {
   open: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 const emit = defineEmits<{ close: [] }>()
 
 const { downloadIcs } = useIcsDownload()
 
+const lastActionDate = computed(() => {
+  const dates = props.actions.map(a => a.date)
+  return dates.length ? new Date(Math.max(...dates.map(d => d.getTime()))) : new Date()
+})
+
 function handleAddToCalendar() {
-  downloadIcs()
+  downloadIcs(lastActionDate.value)
   emit('close')
 }
 
 const { fetchedAt, loadData } = useGoogleSheetsData()
 
 const config = useRuntimeConfig()
+const repoUrl = config.public.githubRepoUrl as string
 const buildInfo = computed(() => {
   const sha = config.public.commitSha as string
   const shortSha = config.public.commitShortSha as string
@@ -220,10 +226,10 @@ const buildInfo = computed(() => {
     shortSha: resolvedShortSha,
     isDirty,
     refUrl: isTag
-      ? `https://github.com/IndivisibleSFOrg/no-kings-countdown/releases/tag/${ref}`
-      : `https://github.com/IndivisibleSFOrg/no-kings-countdown/tree/${ref}`,
+      ? `${repoUrl}/releases/tag/${ref}`
+      : `${repoUrl}/tree/${ref}`,
     date: `${datePart} ${timePart.slice(0, 5)} UTC`,
-    runUrl: runId ? `https://github.com/IndivisibleSFOrg/no-kings-countdown/actions/runs/${runId}` : null,
+    runUrl: runId ? `${repoUrl}/actions/runs/${runId}` : null,
   }
 })
 
