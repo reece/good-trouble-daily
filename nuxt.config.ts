@@ -134,6 +134,7 @@ export default defineNuxtConfig({
         { name: 'twitter:image', content: 'https://goodtroubledaily.org/og-image.webp' },
       ],
       link: [
+        { rel: 'icon', href: '/favicon.ico' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
